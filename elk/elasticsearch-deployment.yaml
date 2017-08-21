@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: elasticsearch
-        image: elasticsearch:5
+        image: xiechuan/elasticsearch:5
         ports:
         - containerPort: 9200
         - containerPort: 9300
@@ -28,5 +28,6 @@ spec:
           mountPath: /usr/share/elasticsearch/data
       volumes:
       - name: es-volume
-        persistentVolumeClaim:
-          claimName: efk-claim
+        nfs:
+          server: 192.168.10.123
+          path: "/home/public/elk"
