@@ -89,7 +89,7 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 1
       - name: xtrabackup
-        image: 192.168.1.103/k8s_public/xtrabackup:1.0
+        image: xiechuan/xtrabackup:1.0
         ports:
         - name: xtrabackup
           containerPort: 3307
