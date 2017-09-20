@@ -130,7 +130,7 @@ spec:
           $(<change_master_to.sql.orig),
             MASTER_HOST='mysql-0.mysql',
             MASTER_USER='root',
-            MASTER_PASSWORD='',
+            MASTER_PASSWORD='123456',
             MASTER_CONNECT_RETRY=10;
           START SLAVE;
           EOF

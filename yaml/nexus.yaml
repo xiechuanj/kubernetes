@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: nexus
+spec:
+  serviceName: "nexus"
+  replicas: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: nexus
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "managed-nfs-storage" #此处引用classname
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi 
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      containers:
+      - name: nexus
+        image: sonatype/nexus:oss
+        imagePullPolicy: IfNotPresent  
+        ports:  
+        - containerPort: 8081
+          name: web  
+          protocol: TCP
+        volumeMounts:  
+        - name: nexus  
+          mountPath: /sonatype-work

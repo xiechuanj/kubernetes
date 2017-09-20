@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 60
       hostNetwork: true
       containers:
-      - image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.11
+      - image: xiechuan/nginx-ingress-controller:0.9.0-beta.13
         name: nginx-ingress-lb
         readinessProbe:
           httpGet:

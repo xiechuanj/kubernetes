@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: sonar
+spec:
+  serviceName: "sonar"
+  replicas: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: sonar
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "managed-nfs-storage" #此处引用classname
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi 
+  template:
+    metadata:
+      labels:
+        app: sonar
+    spec:
+      containers:
+      - name: sonar
+        image: sonarqube
+        imagePullPolicy: IfNotPresent  
+        ports:
+        - containerPort: 9000
+          name: sonar
+          protocol: TCP
+        - containerPort: 9092
+          name: agent
+          protocol: TCP
+        volumeMounts:  
+        - name: sonar  
+          mountPath: /opt/sonarqube/data  
