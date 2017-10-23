@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: nexus 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: nexus 
+    spec:  
+      containers:  
+      - name: nexus  
+        image: sonatype/nexus:oss 
+        imagePullPolicy: IfNotPresent  
+        ports:  
+        - containerPort: 8081  
+          name: web
+          protocol: TCP
+        volumeMounts:  
+        - name: nexushome  
+          mountPath: /sonatype-work  
+      volumes:  
+      - name: nexushome  
+        nfs:
+          server: 10.10.10.14
+          path: "/home/public/nexus"

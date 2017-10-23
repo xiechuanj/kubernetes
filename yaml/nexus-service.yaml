@@ -1,0 +1,13 @@
+kind: Service  
+apiVersion: v1  
+metadata:  
+  labels:  
+      app: nexus 
+  name: nexus 
+spec:  
+  type: NodePort
+  ports:  
+  - port: 8081  
+    nodePort: 30081
+  selector:  
+    app: nexus 

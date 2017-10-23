@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: gogs 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: gogs  
+    spec:  
+      containers:  
+      - name: gogs  
+        image: gogs/gogs 
+        imagePullPolicy: IfNotPresent  
+        ports:  
+        - containerPort: 3000  
+          name: web  
+          protocol: TCP
+        volumeMounts:  
+        - name: gogshome  
+          mountPath: /data
+      volumes:  
+      - name: gogshome  
+        nfs:  
+          server: 10.10.10.11 
+          path: "/opt/public/gogs" 
