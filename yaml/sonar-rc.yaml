@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: sonar
-        image: sonarqube
+        image: sonarqube:6.6
         ports:
         - containerPort: 9000
           name: sonar

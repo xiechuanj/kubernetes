@@ -1,0 +1,34 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: hygieia-jenkins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: hygieia-jenkins
+        app: hygieia
+    spec:
+      containers:
+        - name: hygieia-jenkins
+          image: capitalone/hygieia-jenkins-build-collector #192.168.10.123/pass/hygieia-api:1.0
+          env:
+            - name: HYGIEIA_API_ENV_SPRING_DATA_MONGODB_DATABASE
+              value: "dashboarddb"
+            - name: MONGODB_HOST
+              value: "mongodb"
+            - name: MONGODB_PORT
+              value: "27017"
+            - name: HYGIEIA_API_ENV_SPRING_DATA_MONGODB_USERNAME
+              value: "dashboarduser"
+            - name: HYGIEIA_API_ENV_SPRING_DATA_MONGODB_PASSWORD
+              value: "cloudwalk"
+            - name: JENKINS_MASTER
+              value: "http://192.168.10.212:30080/"
+            - name: JENKINS_USERNAME
+              value: "admin"
+            - name: JENKINS_API_KEY
+              value: "654321"
+            - name: JENKINS_NAME
+              value: "212Jenkins"

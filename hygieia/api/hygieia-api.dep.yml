@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: hygieia-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: hygieia-api
+        app: hygieia
+    spec:
+      containers:
+        - name: hygieia-api
+          image: capitaloneio/hygieia-api #192.168.10.123/pass/hygieia-api:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATA_MONGODB_HOST
+              value: "mongodb"
+            - name: SPRING_DATA_MONGODB_PORT
+              value: "27017"
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: "dashboarddb"
+            - name: SPRING_DATA_MONGODB_USERNAME
+              value: "dashboarduser"
+            - name: SPRING_DATA_MONGODB_PASSWORD
+              value: "cloudwalk"
+            - name: AUTH_EXPIRATION_TIME
+              value: "480000"

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hygieiaapi
+  labels:
+    name: hygieiaapi
+    app: hygieia
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    role: hygieia-api

@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: hygieia-ui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: hygieia-ui
+        app: hygieia
+    spec:
+      containers:
+        - name: hygieia-ui
+          image: capitaloneio/hygieia-ui #192.168.10.123/pass/hygieia-api:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: API_HOST
+              value: "hygieiaapi"
+            - name: API_PORT
+              value: "8080"

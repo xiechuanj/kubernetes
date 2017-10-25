@@ -1,0 +1,18 @@
+#first setup db
+$ mongo
+        MongoDB shell version: 3.0.4
+        connecting to: test
+
+        > use dashboarddb
+        switched to db dashboarddb
+        > db.createUser(
+                 {
+                   user: "dashboarduser",
+                   pwd: "cloudwalk",
+                   roles: [
+                      {role: "readWrite", db: "dashboarddb"}
+                           ]
+                   })
+
+#build specified project
+mvn clean package -pl UI docker:build
