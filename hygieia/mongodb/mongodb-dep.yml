@@ -1,26 +1,26 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mongo
+  name: mongodb
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        role: mongo
+        role: mongodb
         app: hygieia
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: mongo
-          image: 192.168.10.123/pass/mongodb:3.5
+        - name: mongodb
+          image: mongo
           ports:
             - containerPort: 27017
           volumeMounts:
-            - name: mongo-persistent-storage
+            - name: mongodb
               mountPath: /data/db
       volumes:
-      - name: mongo-persistent-storage
+      - name: mongodb
         nfs:
-          server: 192.168.10.123
-          path: /home/public/pass/mongodb
+          server: 10.10.10.14
+          path: /home/public/mongodb

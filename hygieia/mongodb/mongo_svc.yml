@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: mongodb
   labels:
-    name: mongo
+    name: mongodb
     app: hygieia
 spec:
   ports:
   - port: 27017
     targetPort: 27017
   selector:
-    role: mongo
+    role: mongodb
