@@ -33,6 +33,7 @@ spec:
           value: "-Duser.timezone=Asia/Shanghai -Dhudson.model.DirectoryBrowserSupport.CSP="  
       volumes:  
       - name: jenkinshome  
-        nfs:  
-          server: 10.10.10.14  
-          path: "/home/public/jenkins" 
+        glusterfs:
+          endpoints: glusterfs-cluster  
+          path: k8s-volume
+          readOnly: false
