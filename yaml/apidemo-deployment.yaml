@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: apidemo 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: apidemo  
+    spec:  
+      containers:  
+      - name: apidemo
+        image: xiechuan/apidemo:1.0.0 
+        imagePullPolicy: IfNotPresent  
+        ports:  
+        - containerPort: 8000  
+          name: web  
+          protocol: TCP
