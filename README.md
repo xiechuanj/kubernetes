@@ -172,7 +172,7 @@ mysql> show databases;
 - __解决主从不能复制__
 
 ```
-change master to master_host='mysql-0.mysql',master_user='root',master_password='',master_loster_log_file='mysql-0-bin.000003',master_log_pos=10;
+change master to master_host='mysql-0.mysql',master_user='root',master_password='';
 ```
 
 - __REDIS主从__
