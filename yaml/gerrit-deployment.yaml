@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: gerrit 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: gerrit  
+    spec:  
+      containers:  
+      - name: gerrit  
+        image: gerritcodereview/gerrit:3.0.2 
+        imagePullPolicy: IfNotPresent  
+        ports:  
+        - containerPort: 8080 
+          name: http
+          protocol: TCP
+        - containerPort: 29418
+          name: ssh
+          protocol: TCP
+        env:
+        - name: CANONICAL_WEB_URL
+          value: http://localhost
+#        volumeMounts:  
+#        - name: git  
+#          mountPath: /var/gerrit/git
+#        - name: index
+#          mountPath: /var/gerrit/index
+#        - name: cache
+#          mountPath: /var/gerrit/cache
+#        - name: etc
+#          mountPath: /var/gerrit/etc
+#        - name: db
+#          mountPath: /var/gerrit/db
+#      volumes:  
+#      - name: git
+#        nfs:  
+#          server: 172.16.33.177 
+#          path: "/opt/public/gerrit/git" 
+#      - name: index
+#        nfs:
+#          server: 172.16.33.177
+#          path: "/opt/public/gerrit/index"
+#      - name: cache
+#        nfs:
+#          server: 172.16.33.177
+#          path: "/opt/public/gerrit/cache"
+#      - name: etc
+#        nfs:
+#          server: 172.16.33.177
+#          path: "/opt/public/gerrit/etc"
+#      - name: db
+#        nfs:
+#          server: 172.16.33.177
+#          path: "/opt/public/gerrit/db"
