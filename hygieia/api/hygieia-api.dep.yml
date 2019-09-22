@@ -25,6 +25,6 @@ spec:
             - name: SPRING_DATA_MONGODB_USERNAME
               value: "dashboarduser"
             - name: SPRING_DATA_MONGODB_PASSWORD
-              value: "cloudwalk"
+              value: "dbpassword"
             - name: AUTH_EXPIRATION_TIME
               value: "480000"

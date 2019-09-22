@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: phpldapadmin 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: phpldapadmin  
+    spec:  
+      containers:  
+      - name: phpldapadmin  
+        image: osixia/phpldapadmin 
+        imagePullPolicy: IfNotPresent  
+#        resources:
+#          limits:
+#            cpu: 256m
+#            memory: 256Mi
+#          requests:
+#            cpu: 256m
+#            memory: 256Mi
+        ports:  
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        env:
+        - name: PHPLDAPADMIN_LDAP_HOSTS 
+          value: openldap

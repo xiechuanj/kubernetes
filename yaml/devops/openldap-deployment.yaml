@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: openldap 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: openldap  
+    spec:  
+      containers:  
+      - name: openldap  
+        image: osixia/openldap 
+        imagePullPolicy: IfNotPresent  
+#        resources:
+#          limits:
+#            cpu: 256m
+#            memory: 256Mi
+#          requests:
+#            cpu: 256m
+#            memory: 256Mi
+        ports:  
+        - containerPort: 389
+          name: http
+          protocol: TCP
+        - containerPort: 636
+          name: ssh
+          protocol: TCP
+        env:
+        - name: LDAP_ADMIN_PASSWORD
+          value: secret
+        - name: TZ
+          value: Asia/Shanghai
+        volumeMounts:  
+        - name: data  
+          mountPath: /var/lib/ldap
+        - name: config
+          mountPath: /etc/ldap/slapd.d
+      volumes:  
+      - name: config  
+        nfs:  
+          server: 192.168.17.11 
+          path: "/home/public/ldap/config" 
+      - name: data
+        nfs:
+          server: 192.168.17.11
+          path: "/home/public/ldap/data"

@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: gitlab 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: gitlab  
+    spec:  
+      containers:  
+      - name: gitlab  
+        image: gitlab/gitlab-ce 
+        imagePullPolicy: IfNotPresent  
+#        resources:
+#          limits:
+#            cpu: 256m
+#            memory: 256Mi
+#          requests:
+#            cpu: 256m
+#            memory: 256Mi
+        ports:  
+        - containerPort: 80 
+          name: http
+          protocol: TCP
+        - containerPort: 22
+          name: ssh
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Asia/Shanghai
+        volumeMounts:  
+        - name: data  
+          mountPath: /var/opt/gitlab
+        - name: log
+          mountPath: /var/log/gitlab
+        - name: config
+          mountPath: /etc/gitlab
+      volumes:  
+      - name: config  
+        nfs:  
+          server: 192.168.17.11 
+          path: "/home/public/gitlab/config" 
+      - name: log
+        nfs:
+          server: 192.168.17.11
+          path: "/home/public/gitlab/log"
+      - name: data
+        nfs:
+          server: 192.168.17.11
+          path: "/home/public/gitlab/data"

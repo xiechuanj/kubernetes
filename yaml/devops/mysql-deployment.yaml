@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1  
+kind: Deployment  
+metadata:  
+  name: mysql 
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: mysql  
+    spec:  
+      containers:  
+      - name: mysql  
+        image: mysql:5.7.21 
+        imagePullPolicy: IfNotPresent  
+#        resources:
+#          limits:
+#            cpu: 256m
+#            memory: 256Mi
+#          requests:
+#            cpu: 256m
+#            memory: 256Mi
+        ports:  
+        - containerPort: 3306 
+          name: mysql
+          protocol: TCP
+        env:
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+        - name: TZ
+          value: Asia/Shanghai        
+        volumeMounts:  
+        - name: data  
+          mountPath: /var/lib/mysql
+        - name: config
+          mountPath: /etc/mysql/conf.d
+      volumes:  
+      - name: config  
+        nfs:  
+          server: 192.168.17.11 
+          path: "/home/public/mysql/config" 
+      - name: data
+        nfs:
+          server: 192.168.17.11
+          path: "/home/public/mysql/data"

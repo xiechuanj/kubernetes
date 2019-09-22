@@ -1,0 +1,17 @@
+kind: Service  
+apiVersion: v1  
+metadata:  
+  labels:  
+      app: sonarqube 
+  name: sonarqube  
+spec:  
+  type: NodePort
+  ports:  
+  - port: 9000
+    targetPort: 9000
+    name: http  
+  - port: 9092
+    targetPort: 9092
+    name: sonarqube
+  selector:  
+    app: sonarqube 

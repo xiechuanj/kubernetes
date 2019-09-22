@@ -1,0 +1,17 @@
+kind: Service  
+apiVersion: v1  
+metadata:  
+  labels:  
+      app: openldap 
+  name: openldap  
+spec:  
+  type: NodePort
+  ports:  
+  - port: 389
+    targetPort: 389
+    name: http  
+  - port: 636
+    targetPort: 636
+    name: openldap
+  selector:  
+    app: openldap 
